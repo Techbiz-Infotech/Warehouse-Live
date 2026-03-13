@@ -1,0 +1,39 @@
+{
+  "id": "085fe094-1b25-4e9b-bc2b-642ebbbe72ce",
+  "name": "IMS Warehouse Live",
+  "publisher": "TechBIZInfotech",
+  "version": "1.0.0.47",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [
+    {
+      "id": "8b5e999f-4826-4bca-b3fb-1d0c4651d42a",
+     "name": "IMS365",
+     "publisher": "TechBIZInfotech",
+     "version": "1.0.0.411"
+   }
+  ],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "24.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50400
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "runtime": "13.0",
+  "features": [
+    "NoImplicitWith"
+  ]
+}
