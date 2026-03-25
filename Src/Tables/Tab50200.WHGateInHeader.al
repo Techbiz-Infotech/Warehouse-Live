@@ -54,11 +54,23 @@ table 50200 "WH Gate In Header"
             trigger OnValidate()
             var
                 CustomerRec: Record Customer;
+                WHLedger: Record "Warehouse Item Ledger Entry";
             begin
                 if CustomerRec.Get("Consignee No.") then
                     "Consignee Name" := CustomerRec.Name
                 else
                     "Consignee Name" := '';
+
+                if rec.Posted then begin
+                    WHLedger.Reset();
+                    WHLedger.SetRange("Document No.", rec."Gate In No.");
+                    WHLedger.SetRange("Warehouse Entry Type", WHLedger."Warehouse Entry Type"::Inward);
+                    if WHLedger.FindFirst() then begin
+                        WHLedger."Consignee No." := Rec."Consignee No.";
+                        WHLedger."Consignee Name" := Rec."Consignee Name";
+                        WHLedger.Modify();
+                    end;
+                end;
             end;
         }
         field(6; "Consignee Name"; Text[100])
