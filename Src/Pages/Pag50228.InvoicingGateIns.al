@@ -176,6 +176,7 @@ page 50228 InvoicingGateIns
                     ApplicationArea = all;
                      
                 }
+                
             }
         }
     }
