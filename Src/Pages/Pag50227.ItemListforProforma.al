@@ -306,8 +306,8 @@ page 50227 ItemListforProforma
                                 if TempWHLedger."Location Type" = TempWHLedger."Location Type"::"Bonded Warehouse" then
                                     ChargeableWHperiods := CalculatedPeriod - ChargedWHPeriods
                                 else
-                                if TempWHLedger."Location Type" = TempWHLedger."Location Type"::"Free Warehouse" then
-                                    ChargeableWHperiods := CalculatedPeriod;
+                                    if TempWHLedger."Location Type" = TempWHLedger."Location Type"::"Free Warehouse" then
+                                        ChargeableWHperiods := CalculatedPeriod;
                                 ///  12/09/2024
                                 //Message(Format(ChargedWHPeriods));
                                 if ChargeableWHperiods <> 0 then begin
@@ -397,6 +397,7 @@ page 50227 ItemListforProforma
                             PostedSalesInvLine.Reset();
                             PostedSalesInvLine.SetRange("Gate In No.", WHouseAddCharges."Gate In No.");
                             PostedSalesInvLine.SetRange(Type, PostedSalesInvLine.Type::Item);
+                            PostedSalesInvLine.SetRange("Invoice Type", PostedSalesInvLine."Invoice Type"::"Gate Out");
                             PostedSalesInvLine.SetRange("No.", WHouseAddCharges."Charges Code");
                             if postedsalesinvline.findfirst then begin
                                 PostedSalesCrLine.Reset();
