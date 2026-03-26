@@ -397,7 +397,7 @@ page 50227 ItemListforProforma
                             PostedSalesInvLine.Reset();
                             PostedSalesInvLine.SetRange("Gate In No.", WHouseAddCharges."Gate In No.");
                             PostedSalesInvLine.SetRange(Type, PostedSalesInvLine.Type::Item);
-                            PostedSalesInvLine.SetRange("Invoice Type", PostedSalesInvLine."Invoice Type"::"Gate Out");
+                            PostedSalesInvLine.SetRange("Invoice Type", PostedSalesInvLine."Invoice Type"::"Gate Out");//SH 03-26-2026
                             PostedSalesInvLine.SetRange("No.", WHouseAddCharges."Charges Code");
                             if postedsalesinvline.findfirst then begin
                                 PostedSalesCrLine.Reset();
