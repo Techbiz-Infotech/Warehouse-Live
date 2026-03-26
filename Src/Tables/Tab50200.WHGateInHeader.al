@@ -54,11 +54,14 @@ table 50200 "WH Gate In Header"
             trigger OnValidate()
             var
                 CustomerRec: Record Customer;
+                WHLedger: Record "Warehouse Item Ledger Entry";
             begin
                 if CustomerRec.Get("Consignee No.") then
                     "Consignee Name" := CustomerRec.Name
                 else
                     "Consignee Name" := '';
+
+
             end;
         }
         field(6; "Consignee Name"; Text[100])
@@ -187,6 +190,48 @@ table 50200 "WH Gate In Header"
         end;
     end;
 
+    procedure UpdatePostedWarehouseGateIn()
+    var
+        WHLedgerEntry1, WHLedgerEntry : Record "Warehouse Item Ledger Entry";
+        GateInLine: Record "WH Gate In Line";
+        EntryNo: Integer;
+    begin
+        if rec.Posted then begin
+            WHLedgerEntry.Reset();
+            WHLedgerEntry.SetRange("Document No.", rec."Gate In No.");
+            WHLedgerEntry.SetRange("Warehouse Entry Type", WHLedgerEntry."Warehouse Entry Type"::Inward);
+            if WHLedgerEntry.FindFirst() then begin
+                GateInLine.Reset();
+                GateInLine.SetRange("Gate In No.", WHLedgerEntry."Document No.");
+                if GateInLine.FindFirst() then begin
+                    repeat
+                        WHLedgerEntry.Validate("Posting Date", Rec."Activity Date");
+                        WHLedgerEntry.Validate("Document Line No.", GateInLine."Line No.");
+                        WHLedgerEntry.Validate("Description Of The Goods", GateInLine."Description Of The Goods");
+                        WHLedgerEntry.Validate("Location Code", GateInLine."Location Code");
+                        WHLedgerEntry.Validate("Consignee No.", Rec."Consignee No.");
+                        WHLedgerEntry.Validate("Consignee Name", Rec."Consignee Name");
+                        WHLedgerEntry.Validate("Consignment Value", Rec."Consignment Value");
+                        WHLedgerEntry.Validate("Clearing Agent", Rec."Clearing Agent");
+                        WHLedgerEntry.Validate("Clearing Agent Name", Rec."Clearing Agent Name");
+                        WHLedgerEntry.Validate("Location Type", Rec."Location Type");
+                        WHLedgerEntry.Validate("Shelf No.", GateInLine."Shelf No.");
+                        WHLedgerEntry.Validate("Customs No.", Rec."Customs No.");
+                        WHLedgerEntry.Validate(Quantity, GateInLine.Quantity);
+                        WHLedgerEntry.Validate(Weight, GateInLine.Weight);
+                        WHLedgerEntry.Validate(CBM, GateInLine.CBM);
+                        WHLedgerEntry.Validate("Weight/CBM", GateInLine."Weight/CBM");
+                        WHLedgerEntry.Validate("Container Size", GateInLine."Container Size");
+                        WHLedgerEntry.Validate(TEUs, GateInLine.TEUs);
+                        WHLedgerEntry.Validate("Chargable CBM/Weight", GateInLine."Chargable CBM/Weight");
+                        WHLedgerEntry.Modify();
+                    until GateInLine.Next() = 0;
+
+                end;
+            end;
+        end;
+    end;
+
     procedure PostWarehouseGateIn()
     var
         WHLedgerEntry1, WHLedgerEntry : Record "Warehouse Item Ledger Entry";
@@ -198,6 +243,7 @@ table 50200 "WH Gate In Header"
             TestField("Consignment Value");
             TestField("Clearing Agent");
         end;
+
         if Confirm('Do you want to post Warehouse Gate In Order?', false) then begin
             GateInLine.Reset();
             GateInLine.SetRange("Gate In No.", Rec."Gate In No.");
