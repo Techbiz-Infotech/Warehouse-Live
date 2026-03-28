@@ -264,6 +264,7 @@ table 50202 "WH Gate Out Header"
                     GateOutLine.Validate("Gate In Weight", WarehouseLedger.Weight);
                     GateOutLine.Validate("Invoiced CBM/Weight", InvoicingGateIns."Invoicing CBM/Weight");
                     GateOutLine.Validate("Invoiced Quantity", InvoicingGateIns."Invoicing Quantity");
+                    GateOutLine.Validate("Invoiced WH Stripped Qty", InvoicingGateIns."Invoicing WH Stripped Qty");
                     GateOutLine.Validate("Invoice No.", InvoicingGateIns."Posted Invoice No.");
                     GateOutLine.Validate("Invoice Date", InvoicingGateIns."Activity Date");
                     GateOutLine.Validate("Location Code", InvoicingGateIns."Location Code");

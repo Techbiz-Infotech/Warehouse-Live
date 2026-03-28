@@ -185,6 +185,28 @@ table 50204 "Warehouse Item Ledger Entry"
             Caption = 'Chargeable warehouse Periods';
             DataClassification = ToBeClassified;
         }
+        field(36; "Stripped Qty"; Decimal)
+        {
+            Caption = 'Stripped Qty';
+            DataClassification = ToBeClassified;
+        }
+        field(37; "Invoicing WH Stripped Qty"; Decimal)
+        {
+            Caption = 'Invoicing WH Stripped Qty';
+            DataClassification = ToBeClassified;
+        }
+        field(38; "Remaining WH Stripped Qty"; Decimal)
+        {
+            Caption = 'Remaining WH Stripped Qty';
+            DataClassification = ToBeClassified;
+        }
+        
+        field(40; "Invoiced WH Stripped Qty"; Decimal)
+        {
+            Caption = 'Invoiced WH Stripped Qty';
+            DataClassification = ToBeClassified;
+        }
+        
     }
 
     keys

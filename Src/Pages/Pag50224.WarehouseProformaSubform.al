@@ -340,6 +340,14 @@ page 50224 "Warehouse Proforma Subform"
                     AboutTitle = 'Invoicing more or less than you ship?';
                     AboutText = 'Adjust the ‘Qty. to Invoice’ to specify the quantity you want to invoice now. If that is more than you ship, use the prepayment functionality.';
                 }
+                field("Invoicing WH Stripped Qty"; Rec."Invoicing WH Stripped Qty")
+                {
+                    ApplicationArea = Basic, Suite;
+                    BlankZero = true;
+                    ToolTip = 'Specifies how many units of the item on the line have been invoiced in warehouse processes. This field is used for integration with warehouse management processes and is updated when items are invoiced in a warehouse process.';
+
+                }
+                
                 field("Quantity Invoiced"; Rec."Quantity Invoiced")
                 {
                     ApplicationArea = Basic, Suite;

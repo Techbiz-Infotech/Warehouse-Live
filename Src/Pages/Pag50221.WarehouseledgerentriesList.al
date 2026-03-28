@@ -121,6 +121,26 @@ page 50221 "Warehouse ledger entries List"
                     ToolTip = 'Specifies the value of the Weight field.';
                     Editable = false;
                 }
+                field("Stripped Qty"; Rec."Stripped Qty")
+                {
+                    ApplicationArea = all;
+                    ToolTip = 'Specifies the value of the Stripped Qty field.';
+                    Editable = false;
+
+                }
+                field("Invoicing WH Stripped Qty"; Rec."Invoicing WH Stripped Qty")
+                {
+                    ApplicationArea = all;
+                    ToolTip = 'Specifies the value of the Invoicing WH Stripped Qty field.';
+                    Editable = false;
+
+                }
+                field("Remaining WH Stripped Qty"; Rec."Remaining WH Stripped Qty")
+                {
+                    ApplicationArea = all;
+                    ToolTip = 'Specifies the value of the Remaining WH Stripped Qty field.';
+                    Editable = false;
+                }
 
                 field("Remaining Consignment Value"; rec."Remaining Consignment Value")
                 {

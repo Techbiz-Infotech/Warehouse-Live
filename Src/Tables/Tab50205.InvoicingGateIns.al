@@ -157,6 +157,11 @@ table 50205 "Invoicing Gate Ins"
             Caption = 'Customs Entry No.';
             DataClassification = ToBeClassified;
         }
+        field(37; "Invoicing WH Stripped Qty"; Decimal)
+        {
+            Caption = 'Invoicing WH Stripped Qty';
+            DataClassification = ToBeClassified;
+        }
     }
     keys
     {

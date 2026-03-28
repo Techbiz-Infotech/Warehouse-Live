@@ -105,6 +105,30 @@ page 50227 ItemListforProforma
                     Editable = false;
                     ToolTip = 'Specifies the value of the Location Type field.';
                 }
+                field("Stripped Qty"; Rec."Stripped Qty")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                    ToolTip = 'Specifies the value of the Stripped Qty field.';
+                }
+                field("Invoicing WH Stripped Qty"; Rec."Invoicing WH Stripped Qty")
+                {
+                    ApplicationArea = All;
+
+                    ToolTip = 'Specifies how many units of the item on the line have been invoiced in warehouse processes. This field is used for integration with warehouse management processes and is updated when items are invoiced in a warehouse process.';
+                    trigger OnValidate()
+                    var
+                    begin
+                        if rec."Invoicing WH Stripped Qty" > Rec."Remaining WH Stripped Qty" then
+                            error('Invoicing WH Stripped Qty must be Less than the Remaining CBM/Weight');
+                    end;
+                }
+                field("Remaining WH Stripped Qty"; Rec."Remaining WH Stripped Qty")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                    ToolTip = 'Specifies how many units of the item on the line remain to be invoiced in warehouse processes. This field is used for integration with warehouse management processes and is updated when items are invoiced in a warehouse process.';
+                }
             }
         }
     }
@@ -116,14 +140,14 @@ page 50227 ItemListforProforma
         IMSSetup: Record "IMS Setup";
         ChargeID: Code[20];
         RecItem: Record Item;
-        BondWHLedger, WHLedger : Record "Warehouse Item Ledger Entry";
+        BondWHLedger, WHLedger, StrippedWHLedger : Record "Warehouse Item Ledger Entry";
         RecSalesLine, Salesline : Record "Sales Line";
         PostedSalesInvLine: Record "Sales Invoice Line";
         PostedSalesCrLine: Record "Sales Cr.Memo Line";
         WHouseAddCharges: Record "WareHouse Additional Charges";
         LineNo1, StorageDays, LineNo : Integer;
         StorageStartDate, GateInDate : Date;
-        CalculatedPeriod, ActualChargeAmount, RemainingStock, RemainingCBM, MinimumChargeAmount, InvCBM : Decimal;
+        CalculatedPeriod, ActualChargeAmount, RemainingStock, RemainingCBM, RemainingStrippedWeight, MinimumChargeAmount, InvCBM : Decimal;
         ChargableStorageDays: Integer;
         InvoicingGateIns: Record "Invoicing Gate Ins";
         SalesLineAmount, PerWeekAmount : Decimal;
@@ -364,6 +388,7 @@ page 50227 ItemListforProforma
                                 Salesline.validate(Warehouse, true);
                                 Salesline.validate("Invoicing Quantity", TempWHLedger."Invoicing Quantity");
                                 Salesline.validate("Invoicing CBM/Weight", TempWHLedger."Invoicing CBM/Weight");
+                                Salesline.validate("Invoicing WH Stripped Qty", TempWHLedger."Invoicing WH Stripped Qty");
                                 Salesline.Validate("Container Size", TempWHLedger."Container Size");
                                 Salesline.validate("Clearing Agent", TempWHLedger."Clearing Agent");
                                 Salesline.validate("Clearing Agent Name", TempWHLedger."Clearing Agent Name");
@@ -423,8 +448,9 @@ page 50227 ItemListforProforma
                                     RecSalesLine.Validate("Unit Price", WHouseAddCharges.Rate);
                                     RecSalesLine.Validate("Invoice Type", WHouseAddCharges."Invoice Type");
                                     RecSalesLine.Validate("Storage Start Date", StorageStartDate);
-                                    RecSalesLine.validate("Invoicing Quantity", TempWHLedger."Remaining Quantity");
-                                    RecSalesLine.validate("Invoicing CBM/Weight", TempWHLedger."Remaining CBM/Weight");
+                                    RecSalesLine.validate("Invoicing Quantity", TempWHLedger."Invoicing Quantity");
+                                    RecSalesLine.validate("Invoicing CBM/Weight", TempWHLedger."Invoicing CBM/Weight");
+                                    RecSalesLine.Validate("Invoicing WH Stripped Qty", TempWHLedger."Invoicing WH Stripped Qty");
                                     RecSalesline."Auto Calculated" := true;
                                     RecSalesLine.Warehouse := true;
                                     RecSalesLine.insert;
@@ -449,8 +475,9 @@ page 50227 ItemListforProforma
                                 RecSalesLine.Validate("Unit Price", WHouseAddCharges.Rate);
                                 RecSalesLine.Validate("Invoice Type", WHouseAddCharges."Invoice Type");
                                 RecSalesLine.Validate("Storage Start Date", StorageStartDate);
-                                RecSalesLine.validate("Invoicing Quantity", TempWHLedger."Remaining Quantity");
-                                RecSalesLine.validate("Invoicing CBM/Weight", TempWHLedger."Remaining CBM/Weight");
+                                RecSalesLine.validate("Invoicing Quantity", TempWHLedger."Invoicing Quantity");
+                                RecSalesLine.validate("Invoicing CBM/Weight", TempWHLedger."Invoicing CBM/Weight");
+                                RecSalesLine.Validate("Invoicing WH Stripped Qty", TempWHLedger."Invoicing WH Stripped Qty");
                                 RecSalesline."Auto Calculated" := true;
                                 RecSalesLine.Warehouse := true;
                                 RecSalesLine.insert;
@@ -461,6 +488,7 @@ page 50227 ItemListforProforma
                     GateInNo1 := TempWHLedger."Document No.";
                     GateInNo2 := TempWHLedger."Document No.";
                     CreateInvoicingGateIns(TempWHLedger);
+                    RemainingStrippedWeight += TempWHLedger."Remaining WH Stripped Qty" - TempWHLedger."Invoicing WH Stripped Qty";
                     RemainingStock += TempWHLedger."Remaining CBM/Weight" - TempWHLedger."Invoicing CBM/Weight";
                     InvCBM += TempWHLedger."Invoicing CBM/Weight";
 
@@ -731,6 +759,7 @@ page 50227 ItemListforProforma
         InvoicingGatein."Warehouse Entry No." := g_WHLedger."Entry No.";
         InvoicingGatein."Invoicing Quantity" := g_WHLedger."Invoicing Quantity";
         InvoicingGatein."Invoicing CBM/Weight" := g_WHLedger."Invoicing CBM/Weight";
+        InvoicingGatein."Invoicing WH Stripped Qty" := g_WHLedger."Invoicing WH Stripped Qty";
         InvoicingGatein."Location Code" := g_WHLedger."Location Code";
         InvoicingGatein."Consignee No." := g_WHLedger."Consignee No.";
         InvoicingGatein."Consignee Name" := g_WHLedger."Consignee Name";
@@ -750,6 +779,7 @@ page 50227 ItemListforProforma
             repeat
                 Rec."Invoicing CBM/Weight" := 0;
                 Rec."Invoicing Quantity" := 0;
+                rec."Invoicing WH Stripped Qty" := 0;
                 Rec.Modify();
             until rec.Next() = 0;
         IMSSetup.Get();

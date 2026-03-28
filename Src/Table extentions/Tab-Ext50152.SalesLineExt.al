@@ -73,6 +73,13 @@ tableextension 50152 "Sales Line Ext" extends "Sales Line"
 
 
         }
+        field(50136; "Invoicing WH Stripped Qty"; Integer)
+        {
+            Caption = 'Invoicing WH Stripped Qty';
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+       
 
     }
 }

@@ -280,6 +280,17 @@ table 50201 "WH Gate In Line"
                     rec."Chargable CBM/Weight" := "Weight/CBM";
             end;
         }
+        field(39; "WH Stripped Quantity "; Decimal)
+        {
+            Caption = 'WH Stripped Quantity ';
+            DataClassification = ToBeClassified;
+        }
+        field(40; "Stripped Qty Updated"; Boolean)
+        {
+            Caption = 'Stripped Qty Updated';
+            DataClassification = ToBeClassified;
+        }
+        
     }
 
     keys

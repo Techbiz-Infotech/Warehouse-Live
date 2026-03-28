@@ -48,6 +48,14 @@ pageextension 50164 "Posted sales Cr.Memo Subform" extends "Posted Sales Cr. Mem
                 ApplicationArea = Basic, Suite;
                 ToolTip = 'Specifies the Consignment Value';
             }
+            field("Invoicing WH Stripped Qty"; Rec."Invoicing WH Stripped Qty")
+            {
+                ApplicationArea = Basic, Suite;
+                BlankZero = true;
+                ToolTip = 'Specifies how many units of the item on the line have been invoiced in warehouse processes. This field is used for integration with warehouse management processes and is updated when items are invoiced in a warehouse process.';
+
+            }
+           
         }
     }
 }

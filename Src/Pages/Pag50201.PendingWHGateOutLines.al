@@ -175,6 +175,11 @@ page 50201 "Pending GateOut Lines"
                     ToolTip = 'Specifies the value of the Customs Entry field.';
                     ApplicationArea = All;
                 }
+                field("Invoiced WH Stripped Qty"; Rec."Invoiced WH Stripped Qty")
+                {
+                    ToolTip = 'Specifies the value of the Invoiced WH Stripped Qty field.';
+                    ApplicationArea = All;
+                }
 
 
             }

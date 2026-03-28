@@ -89,6 +89,7 @@ codeunit 50150 "Warehouse Event Handler"
                             WarehouseLedgerEntry."Location Code" := SalesCrMemoLine."Location Code";
                             WarehouseLedgerEntry.Quantity := SalesCrMemoLine."Invoicing Quantity";
                             WarehouseLedgerEntry."Weight/CBM" := SalesCrMemoLine."Invoicing CBM/Weight";
+                            WarehouseLedgerEntry."Invoicing WH Stripped Qty" := SalesCrMemoLine."Invoicing WH Stripped Qty";
                             WarehouseLedgerEntry."Consignee No." := SalesCrMemoLine."Sell-to Customer No.";
                             WarehouseLedgerEntry."Clearing Agent" := SalesCrMemoLine."Clearing Agent";
                             WarehouseLedgerEntry."Consignment Value" := InvoicingGateIns."Consignment Value Released";
