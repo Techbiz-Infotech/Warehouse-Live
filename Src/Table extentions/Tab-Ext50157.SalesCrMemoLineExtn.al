@@ -64,5 +64,13 @@ tableextension 50157 "Sales Cr.Memo Line Extn" extends "Sales Cr.Memo Line"
             Caption = 'Customs Entry No.';
             DataClassification = ToBeClassified;
         }
+        
+        field(50136; "Invoicing WH Stripped Qty"; Integer)
+        {
+            Caption = 'Invoicing WH Stripped Qty';
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+       
     }
 }

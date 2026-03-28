@@ -136,6 +136,60 @@ page 50213 "Posted WH Gate In Order"
                     Rec.UpdatePostedWarehouseGateIn();
                 end;
             }
+            action("Update WH Stripped Quantity")
+            {
+                Caption = 'Update WH Stripped Quantity';
+                ApplicationArea = All;
+                Image = UpdateDescription;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+
+                trigger OnAction()
+                var
+                    WarehouseLedgerEntry: Record "Warehouse Item Ledger Entry";  // Correct table name
+                    WHGateInLine: Record "WH Gate In Line";
+                    LinesUpdated: Integer;
+                    ConfirmMsg: Label 'Do you want to update WH Stripped Quantity to Warehouse Ledger Entry?';
+                    SuccessMsg: Label 'Warehouse Ledger Entry updated successfully.\Lines Updated: %1';
+                    NoLinesMsg: Label 'No lines found with WH Stripped Quantity to update.';
+                begin
+                    // Confirm before updating
+                    if not Confirm(ConfirmMsg, false) then
+                        exit;
+
+                    LinesUpdated := 0;
+
+                    // Get all lines from current Gate-In Order
+                    WHGateInLine.Reset();
+                    WHGateInLine.SetRange("Gate In No.", Rec."Gate In No.");
+                    WHGateInLine.SetFilter("WH Stripped Quantity ", '<>%1', 0);  // Only lines with value entered
+
+                    if WHGateInLine.IsEmpty() then begin
+                        Message(NoLinesMsg);
+                        exit;
+                    end;
+
+                    if WHGateInLine.FindSet() then begin
+                        repeat
+                            // Find matching Warehouse Ledger Entry
+                            WarehouseLedgerEntry.Reset();
+                            WarehouseLedgerEntry.SetRange("Document No.", WHGateInLine."Gate In No.");
+                            WarehouseLedgerEntry.SetRange("Document Line No.", WHGateInLine."Line No.");
+                            // WarehouseLedgerEntry.SetFilter("Stripped Qty", '<>%1', 0);
+                            if WarehouseLedgerEntry.FindFirst() then begin
+                                WarehouseLedgerEntry."Stripped Qty" := WHGateInLine."WH Stripped Quantity ";
+                                WarehouseLedgerEntry.Modify(true);
+                                LinesUpdated += 1;
+                                WHGateInLine."Stripped Qty Updated" := true;
+                                WHGateInLine.Modify();
+                            end;
+                        until WHGateInLine.Next() = 0;
+                    end;
+
+                end;
+            }
+
         }
     }
     trigger OnDeleteRecord(): Boolean

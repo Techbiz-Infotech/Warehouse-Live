@@ -200,6 +200,12 @@ table 50203 "WH Gate Out Line"
             Caption = 'Chargeable warehouse Periods';
             DataClassification = ToBeClassified;
         }
+        field(38; "Invoiced WH Stripped Qty"; Decimal)
+        {
+            Caption = 'Invoiced WH Stripped Qty';
+            DataClassification = ToBeClassified;
+        }
+
 
 
     }
@@ -255,6 +261,7 @@ table 50203 "WH Gate Out Line"
                     //SH 02/25/2025
                     WHLedgerEntry.Validate("Weight/CBM", -GateOutLine."Releasing CBM/Weight");
                     WHLedgerEntry.Validate("Invoiced CBM/Weight", -GateOutLine."Invoiced CBM/Weight");
+                    WHLedgerEntry.Validate("Invoiced WH Stripped Qty", -GateOutLine."Invoiced WH Stripped Qty");
                     //SH 02/25/2025
                     //2/27/2025
                     WHLedgerEntry.Validate("Remaining Bond value", WHGateOut."Remaining Bond value");

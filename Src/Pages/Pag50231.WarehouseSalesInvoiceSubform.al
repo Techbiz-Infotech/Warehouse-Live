@@ -661,6 +661,14 @@ page 50231 WarehouseSalesInvoiceSubform
                     ToolTip = 'Specifies the Auto calculated charge.';
                     Visible = LineFieldVisible;
                 }
+                field("Invoicing WH Stripped Qty"; Rec."Invoicing WH Stripped Qty")
+                {
+                    ApplicationArea = Basic, Suite;
+                    BlankZero = true;
+                    ToolTip = 'Specifies how many units of the item on the line have been invoiced in warehouse processes. This field is used for integration with warehouse management processes and is updated when items are invoiced in a warehouse process.';
+
+                }
+
 
                 // field("Shortcut Dimension 2 Code"; Rec."Shortcut Dimension 2 Code")
                 // {

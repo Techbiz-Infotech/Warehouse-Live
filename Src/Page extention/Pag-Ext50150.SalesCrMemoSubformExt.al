@@ -30,6 +30,11 @@ pageextension 50150 SalesCrMemoSubformExt extends "Sales Cr. Memo Subform"
                 ApplicationArea = Basic, Suite;
                 ToolTip = 'Specifies the Customs Entry No.';
             }
+            field("Invoicing WH Stripped Qty"; Rec."Invoicing WH Stripped Qty")
+            {
+                ApplicationArea = all;
+                ToolTip = 'Specifies the Invoicing WH Stripped Qty';
+            }
 
         }
     }

@@ -176,7 +176,12 @@ page 50228 InvoicingGateIns
                     ApplicationArea = all;
                      
                 }
-                
+                field("Invoicing WH Stripped Qty"; Rec."Invoicing WH Stripped Qty")
+                {
+                    ToolTip = 'Specifies the value of the Invoicing WH Stripped Qty field.', Comment = '%';
+                    ApplicationArea = all;
+                    Editable = false;
+                }
             }
         }
     }

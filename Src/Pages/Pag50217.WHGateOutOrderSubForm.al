@@ -39,6 +39,12 @@ page 50217 "WH Gate Out Order SubForm"
                     ApplicationArea = All;
                     Editable = false;
                 }
+                field("Invoiced WH Stripped Qty"; Rec."Invoiced WH Stripped Qty")
+                {
+                    ToolTip = 'Specifies the value of the Invoiced WH Stripped Qty field.';
+                    ApplicationArea = All;
+                    Editable = false;
+                }
                 field("Receipt No."; rec."Receipt No.")
                 {
                     ToolTip = 'Specifies the value of the Receipt No. field.';

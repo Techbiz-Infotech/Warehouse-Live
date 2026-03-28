@@ -97,7 +97,7 @@ field(50154; "BIF"; Integer)
     procedure UpdateWHValues()
     var
         Qty, CRQty, CBMWt, CRCBMWt, ConsignValue, CRConsignValue, InConValue, OutConValue : Decimal;
-        WHLedgerEntry1, WHLedgerEntry2, WHLedgerEntry3 : Record "Warehouse Item Ledger Entry";
+        WHLedgerEntry1, WHLedgerEntry2, WHLedgerEntry3, WHLedgerEntry4 : Record "Warehouse Item Ledger Entry";
         PostedgateInheader: Record "WH Gate In Header";
         PostedGateoutheader: Record "WH Gate Out Header";
         IMSSetup: Record "IMS Setup";
@@ -135,6 +135,7 @@ field(50154; "BIF"; Integer)
                     until WHLedgerEntry3.Next() = 0;
 
                 WHLedgerEntry1."Remaining Quantity" := WHLedgerEntry1.Quantity + Qty + CRQty;
+                WHLedgerEntry1."Remaining WH Stripped Qty" := WHLedgerEntry1."Stripped Qty" - WHLedgerEntry1."Invoicing WH Stripped Qty";
                 WHLedgerEntry1."Remaining CBM/Weight" := WHLedgerEntry1."Weight/CBM" + CBMWt + CRCBMWt;
                 WHLedgerEntry1."Remaining Consignment Value" := WHLedgerEntry1."Consignment Value" + ConsignValue + CRConsignValue;
                 WHLedgerEntry1."Age in No. of Days" := WorkDate() - WHLedgerEntry1."Posting Date";

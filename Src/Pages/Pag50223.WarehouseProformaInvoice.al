@@ -1897,6 +1897,7 @@ page 50223 "Warehouse Proforma Invoice"
         InvoicingGatein."Warehouse Entry No." := g_WHLedger."Entry No.";
         InvoicingGatein."Invoicing Quantity" := g_WHLedger."Remaining Quantity";
         InvoicingGatein."Invoicing CBM/Weight" := g_WHLedger."Remaining CBM/Weight";
+        InvoicingGatein."Invoicing WH Stripped Qty":= g_WHLedger."Invoicing WH Stripped Qty";
         InvoicingGatein."Location Code" := g_WHLedger."Location Code";
         InvoicingGatein."Consignee No." := g_WHLedger."Consignee No.";
         InvoicingGatein."Consignee Name" := g_WHLedger."Consignee Name";
