@@ -108,7 +108,7 @@ page 50214 "Posted Gate In Order SubForm"
                 {
                     ToolTip = 'Specifies the value of the Stripped Unit field.';
                     ApplicationArea = All;
-                    Editable = IsStrippedQtyChanged;
+                    Editable = IsStrippedQtyChanged;//sh 03-28-2026 added stripped concept
                 }
 
             }
