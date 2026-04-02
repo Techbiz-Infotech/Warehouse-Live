@@ -190,14 +190,18 @@ table 50202 "WH Gate Out Header"
         if "Gate Out No." = '' then
             IMSSetup.Get();
         IMSSetup.TestField("Gate Out Nos.");
-        NoSeriesMngnt.InitSeries(IMSSetup."Gate Out Nos.", xRec."No.series", 0D, "Gate Out No.", "No.series");
+        //NoSeriesMngnt.InitSeries(IMSSetup."Gate Out Nos.", xRec."No.series", 0D, "Gate Out No.", "No.series");
+        "No.Series" := Imssetup."Gate Out Nos.";
+        if NoSeriesMngnt.AreRelated(Imssetup."Vehicle Nos", xRec."No.Series") then
+            "No.Series" := xRec."No.Series";
+        "Gate Out No." := NoSeriesMngnt.GetNextNo("No.Series");
         rec."Activity Date" := Today();
         rec."Activity Time" := Time;
     end;
 
     var
         IMSSetup: Record "IMS Setup";
-        NoSeriesMngnt: Codeunit NoSeriesManagement;
+        NoSeriesMngnt: Codeunit "No. Series";
 
     procedure AssistEdit(var GateOutRec: Record "WH Gate Out Header"): Boolean
     var
@@ -207,8 +211,8 @@ table 50202 "WH Gate Out Header"
             GateOutNo := Rec;
             IMSSetup.Get();
             IMSSetup.TestField("Gate Out Nos.");
-            if NoSeriesMngnt.SelectSeries(IMSSetup."Gate Out Nos.", GateOutRec."No.series", "No.series") then begin
-                NoSeriesMngnt.SetSeries("Gate Out No.");
+            if NoSeriesMngnt.LookupRelatedNoSeries(IMSSetup."Gate Out Nos.", GateOutRec."No.series", "No.series") then begin
+                NoSeriesMngnt.GetNextNo("Gate Out No.");
                 Rec := GateOutNo;
                 exit(true);
             end;
